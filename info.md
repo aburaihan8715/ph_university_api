@@ -21,3 +21,11 @@
 "prettier": "prettier --ignore-path .gitignore --write \"./src/\*_/_.+(js|ts|json)\"",
 "prettier:fix": "npx prettier --write src",
 ```
+
+## Requirements analysis link
+
+https://docs.google.com/document/d/1zkBQp2fU2a7k1b3bydBKpagKHv5IWhZDTQQ90WxGJWU/edit?usp=sharing
+
+## ER diagram link
+
+https://lucid.app/lucidchart/d8730d41-4677-48a5-bd60-a94c8ba5fe69/edit?viewport_loc=-3317%2C-696%2C6137%2C2531%2C0_0&invitationId=inv_cdd1aa9c-bc1b-4a64-9ef1-dcdf7ba9d354

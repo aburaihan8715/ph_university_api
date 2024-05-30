@@ -39,25 +39,29 @@ const localGuardianValidationSchema = z.object({
 });
 
 // Define the Student schema
-const studentValidationSchema = z.object({
-  id: z.string(),
-  password: z.string().max(20, 'Password cannot be more than 20 characters'),
-  name: userNameValidationSchema,
-  gender: z.enum(['male', 'female', 'others']),
-  dateOfBirth: z.string().optional(),
-  email: z.string().email('Email must be a valid email address'),
-  contactNo: z.string(),
-  emergencyContactNo: z.string(),
-  bloodGroup: z
-    .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
-    .optional(),
-  presentAddress: z.string(),
-  permanentAddress: z.string(),
-  guardian: guardianValidationSchema,
-  localGuardian: localGuardianValidationSchema,
-  profileImg: z.string().optional(),
-  isActive: z.enum(['active', 'blocked']).default('active'),
-  isDeleted: z.boolean().default(false),
+const createStudentValidationSchema = z.object({
+  body: z.object({
+    password: z.string().max(20, 'Password cannot be more than 20 characters'),
+    student: z.object({
+      name: userNameValidationSchema,
+      gender: z.enum(['male', 'female', 'others']),
+      dateOfBirth: z.string().optional(),
+      email: z.string().email('Email must be a valid email address'),
+      contactNo: z.string(),
+      emergencyContactNo: z.string(),
+      bloodGroup: z
+        .enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])
+        .optional(),
+      presentAddress: z.string(),
+      permanentAddress: z.string(),
+      guardian: guardianValidationSchema,
+      localGuardian: localGuardianValidationSchema,
+      admissionSemester: z.string(),
+      profileImg: z.string().optional(),
+    }),
+  }),
 });
 
-export default studentValidationSchema;
+export const studentValidation = {
+  createStudentValidationSchema,
+};

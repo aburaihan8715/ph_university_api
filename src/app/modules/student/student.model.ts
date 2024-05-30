@@ -1,7 +1,6 @@
 import { Schema, model } from 'mongoose';
-import bcrypt from 'bcryptjs';
-import config from '../../config';
 import validator from 'validator';
+
 import {
   StudentModel,
   TGuardian,
@@ -109,10 +108,11 @@ const studentSchema = new Schema<TStudent>(
       unique: true,
     },
 
-    password: {
-      type: String,
-      required: [true, 'Password is required'],
-      maxLength: [20, 'Password can not be more than 20 characters'],
+    user: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'User ID is required'],
+      unique: true,
+      ref: 'User',
     },
 
     name: {
@@ -181,13 +181,9 @@ const studentSchema = new Schema<TStudent>(
 
     profileImg: { type: String },
 
-    isActive: {
-      type: String,
-      enum: {
-        values: ['active', 'blocked'],
-        message: '{VALUE} is not a valid status',
-      },
-      default: 'active',
+    admissionSemester: {
+      type: Schema.Types.ObjectId,
+      ref: 'AcademicSemester',
     },
 
     isDeleted: {
@@ -201,18 +197,6 @@ const studentSchema = new Schema<TStudent>(
 );
 
 // DOCUMENT MIDDLEWARE
-studentSchema.pre('save', async function (next) {
-  this.password = await bcrypt.hash(
-    this.password,
-    Number(config.bcrypt_salt_rounds),
-  );
-  next();
-});
-
-studentSchema.post('save', function (doc, next) {
-  doc.password = '';
-  next();
-});
 
 // QUERY MIDDLEWARE
 studentSchema.pre('find', function (next) {
@@ -231,13 +215,6 @@ studentSchema.pre('aggregate', function (next) {
 });
 
 // INSTANCE METHODS
-/*
-studentSchema.methods.isStudentExists = async function(userId: string) {
-  const user = Student.findOne({ id: userId });
-  return user;
-};
-export const Student = model<TStudent, StudentModel>('Student', studentSchema);
-*/
 
 // STATICS METHODS
 studentSchema.statics.isStudentExists = async function (userId: string) {
