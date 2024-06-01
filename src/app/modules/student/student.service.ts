@@ -2,12 +2,26 @@ import { TStudent } from './student.interface';
 import { Student } from './student.model';
 
 const getAStudentFromDB = async (studentId: string) => {
-  const result = await Student.findOne({ _id: studentId });
+  const result = await Student.findById(studentId)
+    .populate('admissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    });
   return result;
 };
 
 const getAllStudentFormDB = async () => {
-  const result = await Student.find({}).sort({ _id: -1 });
+  const result = await Student.find({})
+    .populate('admissionSemester')
+    .populate({
+      path: 'academicDepartment',
+      populate: {
+        path: 'academicFaculty',
+      },
+    });
   return result;
 };
 

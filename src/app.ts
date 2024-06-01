@@ -14,14 +14,9 @@ app.use(cors());
 app.use('/api/v1', router);
 
 // TEST ROUTE
-// NOTE: This route is not working
 const test = (req: Request, res: Response) => {
   const a = 10;
-  res.status(httpStatus.OK).json({
-    success: true,
-    message: 'Test route!!',
-    data: a,
-  });
+  res.send(a);
 };
 app.get('/', test);
 

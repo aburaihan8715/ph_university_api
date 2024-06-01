@@ -29,3 +29,17 @@ https://docs.google.com/document/d/1zkBQp2fU2a7k1b3bydBKpagKHv5IWhZDTQQ90WxGJWU/
 ## ER diagram link
 
 https://lucid.app/lucidchart/d8730d41-4677-48a5-bd60-a94c8ba5fe69/edit?viewport_loc=-3317%2C-696%2C6137%2C2531%2C0_0&invitationId=inv_cdd1aa9c-bc1b-4a64-9ef1-dcdf7ba9d354
+
+## 4 principals of transaction rollback(v-13-9)
+
+ACID
+A=Atomicity
+C=Consistency
+I=Isolation
+D=Durability
+
+Transactions steps
+startSession()
+startTransaction()
+commitTransaction()/abortTransaction()
+endTransaction()
