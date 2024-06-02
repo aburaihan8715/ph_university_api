@@ -22,7 +22,7 @@ const getAllStudent = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Student retrieved successfully',
+    message: 'Students retrieved successfully',
     data: students,
   });
 });
@@ -30,23 +30,23 @@ const getAllStudent = catchAsync(async (req, res) => {
 const updateAStudent = catchAsync(async (req, res) => {
   const updatedStudent = await studentService.updateAStudentIntoDB(
     req.params.studentId,
-    { ...req.body },
+    req.body.student,
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Student retrieved successfully',
+    message: 'Student updated successfully',
     data: updatedStudent,
   });
 });
 
-const deleteAStudent = catchAsync(async (req, res, next) => {
+const deleteAStudent = catchAsync(async (req, res) => {
   await studentService.deleteAStudentFromDB(req.params.studentId);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Student retrieved successfully',
+    message: 'Student deleted successfully',
     data: null,
   });
 });

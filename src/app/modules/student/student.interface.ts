@@ -2,7 +2,7 @@ import { Model, Types } from 'mongoose';
 
 export type TUserName = {
   firstName: string;
-  middleName?: string;
+  middleName: string;
   lastName: string;
 };
 
@@ -39,8 +39,8 @@ export type TStudent = {
   localGuardian: TLocalGuardian;
   profileImg?: string;
   admissionSemester: Types.ObjectId;
+  isDeleted: boolean;
   academicDepartment: Types.ObjectId;
-  isDeleted?: boolean;
 };
 
 // Type for statics method

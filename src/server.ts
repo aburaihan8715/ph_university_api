@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 import app from './app';
 import config from './app/config';
+import { Server } from 'http';
+
+let server: Server;
 
 async function main() {
   try {
@@ -12,7 +15,7 @@ async function main() {
       console.log('Db is connected');
     }
 
-    app.listen(config.port, () => {
+    server = app.listen(config.port, () => {
       console.log(`App is listening at http://localhost:${config.port}`);
     });
   } catch (error) {
@@ -21,3 +24,18 @@ async function main() {
 }
 
 main();
+
+process.on('unhandledRejection', () => {
+  console.log(`😈 unhandledRejection is detected , shutting down ...`);
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
+
+process.on('uncaughtException', () => {
+  console.log(`😈 uncaughtException is detected , shutting down ...`);
+  process.exit(1);
+});
