@@ -23,13 +23,9 @@ const updateAAcademicDepartmentIntoDB = async (
   id: string,
   payload: Partial<TAcademicDepartment>,
 ) => {
-  const result = await AcademicDepartment.findOneAndUpdate(
-    { _id: id },
-    payload,
-    {
-      new: true,
-    },
-  );
+  const result = await AcademicDepartment.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
   return result;
 };
 

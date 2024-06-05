@@ -5,7 +5,7 @@ import catchAsync from '../../utils/catchAsync';
 import AppError from '../../errors/AppError';
 
 const getAStudent = catchAsync(async (req, res) => {
-  const student = await studentService.getAStudentFromDB(req.params.studentId);
+  const student = await studentService.getAStudentFromDB(req.params.id);
   if (!student) throw new AppError(httpStatus.NOT_FOUND, 'Student not found');
 
   //  send response to the client
@@ -29,7 +29,7 @@ const getAllStudent = catchAsync(async (req, res) => {
 
 const updateAStudent = catchAsync(async (req, res) => {
   const updatedStudent = await studentService.updateAStudentIntoDB(
-    req.params.studentId,
+    req.params.id,
     req.body.student,
   );
 
@@ -42,7 +42,7 @@ const updateAStudent = catchAsync(async (req, res) => {
 });
 
 const deleteAStudent = catchAsync(async (req, res) => {
-  await studentService.deleteAStudentFromDB(req.params.studentId);
+  await studentService.deleteAStudentFromDB(req.params.id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -6,12 +6,12 @@ import validateRequest from '../../middlewares/validateRequest';
 const router = express.Router();
 
 router.get('/', studentController.getAllStudent);
-router.get('/:studentId', studentController.getAStudent);
+router.get('/:id', studentController.getAStudent);
 router.patch(
-  '/:studentId',
+  '/:id',
   validateRequest(studentValidations.updateStudentValidationSchema),
   studentController.updateAStudent,
 );
-router.delete('/:studentId', studentController.deleteAStudent);
+router.delete('/:id', studentController.deleteAStudent);
 
 export const studentRouter = router;

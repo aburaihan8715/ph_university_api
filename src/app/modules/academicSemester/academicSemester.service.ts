@@ -18,13 +18,13 @@ const getAllAcademicSemestersFromDB = async () => {
   return result;
 };
 
-const getAAcademicSemesterFromDB = async (semesterId: string) => {
-  const result = await AcademicSemester.findOne({ _id: semesterId });
+const getAAcademicSemesterFromDB = async (id: string) => {
+  const result = await AcademicSemester.findById(id);
   return result;
 };
 
 const updateAAcademicSemesterIntoDB = async (
-  semesterId: string,
+  id: string,
   payload: Partial<TAcademicSemester>,
 ) => {
   if (
@@ -35,13 +35,9 @@ const updateAAcademicSemesterIntoDB = async (
     throw new AppError(httpStatus.BAD_REQUEST, 'Invalid Semester Code');
   }
 
-  const result = await AcademicSemester.findOneAndUpdate(
-    { _id: semesterId },
-    payload,
-    {
-      new: true,
-    },
-  );
+  const result = await AcademicSemester.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
   return result;
 };
 export const AcademicSemesterServices = {
