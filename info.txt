@@ -38,7 +38,7 @@ endTransaction()
 
 
 // NOTE:
-Need course syllables
+
 
 
 

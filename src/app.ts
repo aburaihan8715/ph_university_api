@@ -17,7 +17,10 @@ app.use('/api/v1', router);
 // TEST ROUTE
 const test = (req: Request, res: Response) => {
   const a = 10;
-  res.send(a);
+  res.status(200).json({
+    message: 'Hello from test route',
+    data: a,
+  });
 };
 app.get('/', test);
 
