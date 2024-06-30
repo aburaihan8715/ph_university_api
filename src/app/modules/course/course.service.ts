@@ -23,7 +23,11 @@ const getAllCoursesFromDB = async (query: Record<string, unknown>) => {
     .fields();
 
   const result = await courseQuery.modelQuery;
-  return result;
+  const meta = await courseQuery.countTotal();
+  return {
+    meta,
+    result,
+  };
 };
 
 const getSingleCourseFromDB = async (id: string) => {
@@ -33,7 +37,10 @@ const getSingleCourseFromDB = async (id: string) => {
   return result;
 };
 
-const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
+const updateCourseIntoDB = async (
+  id: string,
+  payload: Partial<TCourse>,
+) => {
   const { preRequisiteCourses, ...courseRemainingData } = payload;
 
   const session = await mongoose.startSession();
@@ -52,7 +59,10 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
     );
 
     if (!updatedBasicCourseInfo) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course!');
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Failed to update course!',
+      );
     }
 
     // check if there is any pre requisite courses to update
@@ -77,7 +87,10 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
       );
 
       if (!deletedPreRequisiteCourses) {
-        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course!');
+        throw new AppError(
+          httpStatus.BAD_REQUEST,
+          'Failed to update course!',
+        );
       }
 
       // filter out the new course fields
@@ -98,7 +111,10 @@ const updateCourseIntoDB = async (id: string, payload: Partial<TCourse>) => {
       );
 
       if (!newPreRequisiteCourses) {
-        throw new AppError(httpStatus.BAD_REQUEST, 'Failed to update course!');
+        throw new AppError(
+          httpStatus.BAD_REQUEST,
+          'Failed to update course!',
+        );
       }
     }
 

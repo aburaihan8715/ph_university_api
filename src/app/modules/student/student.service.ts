@@ -38,12 +38,18 @@ const getAllStudentFormDB = async (query: Record<string, unknown>) => {
     .paginate()
     .fields();
 
+  const meta = await studentQuery.countTotal();
   const result = await studentQuery.modelQuery;
-  return result;
+
+  return { meta, result };
 };
 
-const updateAStudentIntoDB = async (id: string, payload: Partial<TStudent>) => {
-  const { name, guardian, localGuardian, ...remainingStudentData } = payload;
+const updateAStudentIntoDB = async (
+  id: string,
+  payload: Partial<TStudent>,
+) => {
+  const { name, guardian, localGuardian, ...remainingStudentData } =
+    payload;
 
   const modifiedUpdatedData: Record<string, unknown> = {
     ...remainingStudentData,
@@ -87,7 +93,10 @@ const deleteAStudentFromDB = async (id: string) => {
     );
 
     if (!deletedStudent) {
-      throw new AppError(httpStatus.BAD_REQUEST, 'Failed to delete student');
+      throw new AppError(
+        httpStatus.BAD_REQUEST,
+        'Failed to delete student',
+      );
     }
 
     const deletedUser = await User.findByIdAndUpdate(

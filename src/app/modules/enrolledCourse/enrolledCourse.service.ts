@@ -11,6 +11,7 @@ import { TEnrolledCourse } from './enrolledCourse.interface';
 import EnrolledCourse from './enrolledCourse.model';
 import { calculateGradeAndPoints } from './enrolledCourse.utils';
 
+// CREATE
 const createEnrolledCourseIntoDB = async (
   userId: string,
   payload: TEnrolledCourse,
@@ -156,6 +157,8 @@ const createEnrolledCourseIntoDB = async (
     throw new Error(err);
   }
 };
+
+// UPDATE
 const updateEnrolledCourseMarksIntoDB = async (
   facultyId: string,
   payload: Partial<TEnrolledCourse>,

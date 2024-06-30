@@ -1,4 +1,4 @@
-import { Query, Schema, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import validator from 'validator';
 
 import {
@@ -20,7 +20,8 @@ const userNameSchema = new Schema<TUserName>({
     validate: {
       validator: function (value: string) {
         const capitalized =
-          value.charAt(0).toUpperCase() + value.slice(1).toLocaleLowerCase();
+          value.charAt(0).toUpperCase() +
+          value.slice(1).toLocaleLowerCase();
         return capitalized === value;
       },
       message: '{VALUE} is not a capitalized format!',
@@ -204,15 +205,15 @@ const studentSchema = new Schema<TStudent>(
 // DOCUMENT MIDDLEWARE
 
 // QUERY MIDDLEWARE
-studentSchema.pre<Query<any, any>>(/^find/, function (next) {
+studentSchema.pre('find', function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
 
-// studentSchema.pre('findOne', function (next) {
-//   this.find({ isDeleted: { $ne: true } });
-//   next();
-// });
+studentSchema.pre('findOne', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
 
 studentSchema.pre('aggregate', function (next) {
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
@@ -232,4 +233,7 @@ studentSchema.virtual('fullName').get(function () {
   return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`;
 });
 
-export const Student = model<TStudent, StudentModel>('Student', studentSchema);
+export const Student = model<TStudent, StudentModel>(
+  'Student',
+  studentSchema,
+);

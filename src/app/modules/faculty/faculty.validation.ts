@@ -28,7 +28,7 @@ export const createFacultyValidationSchema = z.object({
       presentAddress: z.string(),
       permanentAddress: z.string(),
       academicDepartment: z.string(),
-      profileImg: z.string(),
+      profileImg: z.string().optional(),
     }),
   }),
 });
@@ -49,7 +49,9 @@ export const updateFacultyValidationSchema = z.object({
       email: z.string().email().optional(),
       contactNo: z.string().optional(),
       emergencyContactNo: z.string().optional(),
-      bloodGroup: z.enum([...BloodGroup] as [string, ...string[]]).optional(),
+      bloodGroup: z
+        .enum([...BloodGroup] as [string, ...string[]])
+        .optional(),
       presentAddress: z.string().optional(),
       permanentAddress: z.string().optional(),
       profileImg: z.string().optional(),
