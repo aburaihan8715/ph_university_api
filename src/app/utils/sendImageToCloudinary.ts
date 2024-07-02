@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from 'cloudinary';
-import fs from 'fs';
 import multer from 'multer';
 import config from '../config';
+import { deleteImageFile } from './deleteImageFile';
 
 cloudinary.config({
   cloud_name: config.cloudinary_cloud_name,
@@ -20,23 +20,25 @@ export const sendImageToCloudinary = async (
     });
 
     // delete a file asynchronously
-    fs.unlink(path, (err) => {
-      if (err) {
-        console.error('Error deleting file:', err);
-      } else {
-        console.log('File is deleted.');
-      }
-    });
+    await deleteImageFile(path);
+    // fs.unlink(path, (err) => {
+    //   if (err) {
+    //     console.error('Error deleting file:', err);
+    //   } else {
+    //     console.log('File is deleted.');
+    //   }
+    // });
 
     return uploadResult;
   } catch (error) {
-    fs.unlink(path, (err) => {
-      if (err) {
-        console.error('Error deleting file:', err);
-      } else {
-        console.log('File is deleted.');
-      }
-    });
+    await deleteImageFile(path);
+    // fs.unlink(path, (err) => {
+    //   if (err) {
+    //     console.error('Error deleting file:', err);
+    //   } else {
+    //     console.log('File is deleted.');
+    //   }
+    // });
     console.error('Error uploading image to Cloudinary:', error);
     throw error;
   }

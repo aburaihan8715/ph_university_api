@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import app from './app';
 import config from './app/config';
 import { Server } from 'http';
+import seedSuperAdmin from './app/db';
 
 let server: Server;
 
@@ -13,6 +14,8 @@ async function main() {
 
     if (ConnectionStates.connected) {
       console.log('Db is connected');
+      // CREATE SUPER ADMIN
+      await seedSuperAdmin();
     }
 
     server = app.listen(config.port, () => {

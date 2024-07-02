@@ -56,7 +56,10 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       required: [true, 'Email is required'],
       unique: true,
     },
-    contactNo: { type: String, required: [true, 'Contact number is required'] },
+    contactNo: {
+      type: String,
+      required: [true, 'Contact number is required'],
+    },
     emergencyContactNo: {
       type: String,
       required: [true, 'Emergency contact number is required'],
@@ -76,7 +79,12 @@ const facultySchema = new Schema<TFaculty, FacultyModel>(
       type: String,
       required: [true, 'Permanent address is required'],
     },
-    profileImg: { type: String },
+    profileImg: { type: String, default: '' },
+    academicFaculty: {
+      type: Schema.Types.ObjectId,
+      required: [true, 'Academic faculty id is required'],
+      ref: 'AcademicFaculty',
+    },
     academicDepartment: {
       type: Schema.Types.ObjectId,
       required: [true, 'Academic department id is required'],
@@ -121,4 +129,7 @@ facultySchema.statics.isUserExists = async function (id: string) {
   return existingUser;
 };
 
-export const Faculty = model<TFaculty, FacultyModel>('Faculty', facultySchema);
+export const Faculty = model<TFaculty, FacultyModel>(
+  'Faculty',
+  facultySchema,
+);

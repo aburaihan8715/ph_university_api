@@ -56,7 +56,10 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
       required: [true, 'Email is required'],
       unique: true,
     },
-    contactNo: { type: String, required: [true, 'Contact number is required'] },
+    contactNo: {
+      type: String,
+      required: [true, 'Contact number is required'],
+    },
     emergencyContactNo: {
       type: String,
       required: [true, 'Emergency contact number is required'],
@@ -76,7 +79,7 @@ const adminSchema = new Schema<TAdmin, AdminModel>(
       type: String,
       required: [true, 'Permanent address is required'],
     },
-    profileImg: { type: String },
+    profileImg: { type: String, default: '' },
     isDeleted: {
       type: Boolean,
       default: false,

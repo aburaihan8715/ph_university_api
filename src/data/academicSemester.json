@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "66836029ec5224a7ed669d05",
+    "name": "Autumn",
+    "year": "2030",
+    "code": "01",
+    "startMonth": "January",
+    "endMonth": "April"
+  },
+  {
+    "_id": "6683606eec5224a7ed669d08",
+    "name": "Summer",
+    "year": "2030",
+    "code": "02",
+    "startMonth": "May",
+    "endMonth": "August"
+  },
+  {
+    "_id": "6683609dec5224a7ed669d0b",
+    "name": "Fall",
+    "year": "2030",
+    "code": "03",
+    "startMonth": "September",
+    "endMonth": "December"
+  }
+]

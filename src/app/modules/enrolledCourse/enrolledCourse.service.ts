@@ -214,13 +214,18 @@ const updateEnrolledCourseMarksIntoDB = async (
     const { classTest1, classTest2, midTerm, finalTerm } =
       isCourseBelongToFaculty.courseMarks;
 
+    // NOTE:  Here is problem
     const totalMarks =
-      Math.ceil(classTest1 * 0.1) +
-      Math.ceil(midTerm * 0.3) +
-      Math.ceil(classTest2 * 0.1) +
-      Math.ceil(finalTerm * 0.5);
+      Math.ceil(classTest1) +
+      Math.ceil(midTerm) +
+      Math.ceil(classTest2) +
+      Math.ceil(finalTerm);
+
+    console.log('total marks', totalMarks);
 
     const result = calculateGradeAndPoints(totalMarks);
+
+    console.log('result', result);
 
     modifiedData.grade = result.grade;
     modifiedData.gradePoints = result.gradePoints;

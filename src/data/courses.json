@@ -1,0 +1,126 @@
+[
+  {
+    "_id": "6683708dec5224a7ed669d50",
+    "title": "Basic Express",
+    "prefix": "EXPRESS",
+    "code": 112,
+    "credits": 3,
+    "preRequisiteCourses": [
+      {
+        "course": "66836c85ec5224a7ed669d3e"
+      },
+      {
+        "course": "66836cf6ec5224a7ed669d41"
+      }
+    ]
+  },
+  {
+    "_id": "66837002ec5224a7ed669d4d",
+    "title": "Firebase Authentication",
+    "prefix": "FIREBASE",
+    "code": 111,
+    "credits": 3,
+
+    "preRequisiteCourses": []
+  },
+  {
+    "_id": "66836fbaec5224a7ed669d4a",
+    "title": "React Router DOM",
+    "prefix": "REACT",
+    "code": 110,
+    "credits": 3,
+    "preRequisiteCourses": [
+      {
+        "course": "66836f81ec5224a7ed669d47"
+      }
+    ]
+  },
+  {
+    "_id": "66836f81ec5224a7ed669d47",
+    "title": "React Basic",
+    "prefix": "REACT",
+    "code": 109,
+    "credits": 3,
+    "preRequisiteCourses": [
+      {
+        "course": "66836e48ec5224a7ed669d44"
+      }
+    ]
+  },
+  {
+    "_id": "66836e48ec5224a7ed669d44",
+    "title": "DOM Manipulation",
+    "prefix": "JS",
+    "code": 108,
+    "credits": 3,
+    "preRequisiteCourses": [
+      {
+        "course": "668365d0ec5224a7ed669d32"
+      },
+      {
+        "course": "66836c85ec5224a7ed669d3e"
+      }
+    ]
+  },
+  {
+    "_id": "66836cf6ec5224a7ed669d41",
+    "title": "Problem Solving With JS",
+    "prefix": "JS",
+    "code": 107,
+    "credits": 3,
+    "preRequisiteCourses": [
+      {
+        "course": "66836c85ec5224a7ed669d3e"
+      }
+    ]
+  },
+  {
+    "_id": "66836c85ec5224a7ed669d3e",
+    "title": "Basic Javascript",
+    "prefix": "JS",
+    "code": 106,
+    "credits": 3,
+    "preRequisiteCourses": []
+  },
+  {
+    "_id": "66836c4aec5224a7ed669d3b",
+    "title": "Daisy UI",
+    "prefix": "CSS",
+    "code": 105,
+    "credits": 3,
+    "preRequisiteCourses": [
+      {
+        "course": "668365d0ec5224a7ed669d32",
+        "isDeleted": false
+      },
+      {
+        "course": "66836bf5ec5224a7ed669d38",
+        "isDeleted": false
+      }
+    ]
+  },
+  {
+    "_id": "66836bf5ec5224a7ed669d38",
+    "title": "Tailwind CSS",
+    "prefix": "CSS",
+    "code": 104,
+    "credits": 3,
+    "preRequisiteCourses": [
+      {
+        "course": "668365d0ec5224a7ed669d32"
+      }
+    ]
+  },
+  {
+    "_id": "66836baeec5224a7ed669d35",
+    "title": "Bootstrap",
+    "prefix": "CSS",
+    "code": 103,
+    "credits": 3,
+    "preRequisiteCourses": [
+      {
+        "course": "668365d0ec5224a7ed669d32"
+      }
+    ]
+  }
+]

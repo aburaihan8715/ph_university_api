@@ -8,9 +8,10 @@ import { facultyRouter } from '../modules/faculty/faculty.route';
 import { adminRouter } from '../modules/admin/admin.route';
 import { courseRouter } from '../modules/course/course.route';
 import { semesterRegistrationRouter } from '../modules/semesterRegistration/semesterRegistration.route';
-import { offeredCourseRouter } from '../modules/offeredCourse/offeredCourse.route';
+
 import { AuthRoutes } from '../modules/auth/auth.route';
 import { EnrolledCourseRoutes } from '../modules/enrolledCourse/enrolledCourse.route';
+import { offeredCourseRoutes } from '../modules/offeredCourse/offeredCourse.route';
 
 const router = Router();
 
@@ -55,7 +56,7 @@ const moduleRoutes = [
   },
   {
     path: '/offered-courses',
-    route: offeredCourseRouter,
+    route: offeredCourseRoutes,
   },
   {
     path: '/auth',

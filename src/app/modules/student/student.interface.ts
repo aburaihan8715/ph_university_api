@@ -38,9 +38,10 @@ export type TStudent = {
   guardian: TGuardian;
   localGuardian: TLocalGuardian;
   profileImg?: string;
+  academicFaculty: Types.ObjectId;
+  academicDepartment: Types.ObjectId;
   admissionSemester: Types.ObjectId;
   isDeleted: boolean;
-  academicDepartment: Types.ObjectId;
 };
 
 // Type for statics method
