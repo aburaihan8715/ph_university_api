@@ -5,7 +5,9 @@ import { AcademicDepartmentServices } from './academicDepartment.service';
 
 const createAAcademicDepartment = catchAsync(async (req, res) => {
   const result =
-    await AcademicDepartmentServices.createAAcademicDepartmentIntoDB(req.body);
+    await AcademicDepartmentServices.createAAcademicDepartmentIntoDB(
+      req.body,
+    );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -17,12 +19,15 @@ const createAAcademicDepartment = catchAsync(async (req, res) => {
 
 const getAllAcademicDepartments = catchAsync(async (req, res) => {
   const result =
-    await AcademicDepartmentServices.getAllAcademicDepartmentsFromDB();
+    await AcademicDepartmentServices.getAllAcademicDepartmentsFromDB(
+      req.query,
+    );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Academic departments are retrieved successfully',
+    meta: result.meta,
     data: result,
   });
 });

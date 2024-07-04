@@ -76,7 +76,11 @@ const getAllSemesterRegistrationsFromDB = async (
     .fields();
 
   const result = await semesterRegistrationQuery.modelQuery;
-  return result;
+  const meta = await semesterRegistrationQuery.countTotal();
+  return {
+    result,
+    meta,
+  };
 };
 
 const getSingleSemesterRegistrationsFromDB = async (id: string) => {
@@ -103,10 +107,14 @@ const updateSemesterRegistrationIntoDB = async (
 
   // check if the requested registered semester is exists
   // check if the semester is already registered!
-  const isSemesterRegistrationExists = await SemesterRegistration.findById(id);
+  const isSemesterRegistrationExists =
+    await SemesterRegistration.findById(id);
 
   if (!isSemesterRegistrationExists) {
-    throw new AppError(httpStatus.NOT_FOUND, 'This semester is not found !');
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'This semester is not found !',
+    );
   }
 
   //if the requested semester registration is ended , we will not update anything
@@ -141,10 +149,14 @@ const updateSemesterRegistrationIntoDB = async (
     );
   }
 
-  const result = await SemesterRegistration.findByIdAndUpdate(id, payload, {
-    new: true,
-    runValidators: true,
-  });
+  const result = await SemesterRegistration.findByIdAndUpdate(
+    id,
+    payload,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
 
   return result;
 };
@@ -157,7 +169,8 @@ const deleteSemesterRegistrationFromDB = async (id: string) => {
   **/
 
   // checking if the semester registration is exist
-  const isSemesterRegistrationExists = await SemesterRegistration.findById(id);
+  const isSemesterRegistrationExists =
+    await SemesterRegistration.findById(id);
 
   if (!isSemesterRegistrationExists) {
     throw new AppError(

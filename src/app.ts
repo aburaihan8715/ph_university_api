@@ -9,20 +9,15 @@ const app: Application = express();
 // GLOBAL MIDDLEWARES
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: ['http://localhost:5173'] }));
+app.use(cors({ origin: ['http://localhost:5173'], credentials: true }));
 
 // ROUTES
 app.use('/api/v1', router);
 
 // TEST ROUTE
-const test = (req: Request, res: Response) => {
-  const a = 10;
-  res.status(200).json({
-    message: 'Hello from test route',
-    data: a,
-  });
-};
-app.get('/', test);
+app.get('/', (req: Request, res: Response) => {
+  res.send('Hi Next Level Developer !');
+});
 
 // NOT FOUND ROUTE HANDLER
 app.use(notFound);

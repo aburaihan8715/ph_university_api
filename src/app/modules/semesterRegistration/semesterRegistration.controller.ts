@@ -31,11 +31,11 @@ const getAllSemesterRegistrations = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'Semester Registration is retrieved successfully !',
-      data: result,
+      meta: result.meta,
+      data: result.result,
     });
   },
 );
-
 const getSingleSemesterRegistration = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;
@@ -76,7 +76,9 @@ const deleteSemesterRegistration = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;
     const result =
-      await SemesterRegistrationService.deleteSemesterRegistrationFromDB(id);
+      await SemesterRegistrationService.deleteSemesterRegistrationFromDB(
+        id,
+      );
 
     sendResponse(res, {
       statusCode: httpStatus.OK,

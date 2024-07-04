@@ -44,7 +44,7 @@ endTransaction()
 // NOTE:
 1. File delete issue need to be solved
 
-21-11 done
+2. Free hosting not supported(need to paid hosting)
 
 
 

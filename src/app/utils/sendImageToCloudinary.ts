@@ -18,27 +18,11 @@ export const sendImageToCloudinary = async (
     const uploadResult = await cloudinary.uploader.upload(path, {
       public_id: imageName,
     });
-
     // delete a file asynchronously
     await deleteImageFile(path);
-    // fs.unlink(path, (err) => {
-    //   if (err) {
-    //     console.error('Error deleting file:', err);
-    //   } else {
-    //     console.log('File is deleted.');
-    //   }
-    // });
-
     return uploadResult;
   } catch (error) {
     await deleteImageFile(path);
-    // fs.unlink(path, (err) => {
-    //   if (err) {
-    //     console.error('Error deleting file:', err);
-    //   } else {
-    //     console.log('File is deleted.');
-    //   }
-    // });
     console.error('Error uploading image to Cloudinary:', error);
     throw error;
   }

@@ -19,17 +19,12 @@ const getAStudentFromDB = async (id: string) => {
   return result;
 };
 
-const getAllStudentFormDB = async (query: Record<string, unknown>) => {
+const getAllStudentsFromDB = async (query: Record<string, unknown>) => {
   const studentQuery = new QueryBuilder(
     Student.find()
-      // .populate('user')
+      .populate('user')
       .populate('admissionSemester')
-      .populate({
-        path: 'academicDepartment',
-        populate: {
-          path: 'academicFaculty',
-        },
-      }),
+      .populate('academicDepartment academicFaculty'),
     query,
   )
     .search(studentSearchableFields)
@@ -41,7 +36,10 @@ const getAllStudentFormDB = async (query: Record<string, unknown>) => {
   const meta = await studentQuery.countTotal();
   const result = await studentQuery.modelQuery;
 
-  return { meta, result };
+  return {
+    meta,
+    result,
+  };
 };
 
 const updateAStudentIntoDB = async (
@@ -120,9 +118,9 @@ const deleteAStudentFromDB = async (id: string) => {
   }
 };
 
-export const studentService = {
+export const studentServices = {
   getAStudentFromDB,
-  getAllStudentFormDB,
+  getAllStudentsFromDB,
   updateAStudentIntoDB,
   deleteAStudentFromDB,
 };

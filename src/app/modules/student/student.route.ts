@@ -10,7 +10,7 @@ const router = express.Router();
 router.get(
   '/',
   auth(USER_ROLE.superAdmin, USER_ROLE.admin),
-  studentController.getAllStudent,
+  studentController.getAllStudents,
 );
 
 router.get(

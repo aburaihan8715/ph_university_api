@@ -4,9 +4,8 @@ import sendResponse from '../../utils/sendResponse';
 import { AcademicFacultyServices } from './academicFaculty.service';
 
 const createAAcademicFaculty = catchAsync(async (req, res) => {
-  const result = await AcademicFacultyServices.createAAcademicFacultyIntoDB(
-    req.body,
-  );
+  const result =
+    await AcademicFacultyServices.createAAcademicFacultyIntoDB(req.body);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -17,19 +16,22 @@ const createAAcademicFaculty = catchAsync(async (req, res) => {
 });
 
 const getAllAcademicFaculties = catchAsync(async (req, res) => {
-  const result = await AcademicFacultyServices.getAllAcademicFacultiesFromDB();
+  const result =
+    await AcademicFacultyServices.getAllAcademicFacultiesFromDB(req.query);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Academic faculties are retrieved successfully',
+    meta: result.meta,
     data: result,
   });
 });
 
 const getAAcademicFaculty = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await AcademicFacultyServices.getAAcademicFacultyFromDB(id);
+  const result =
+    await AcademicFacultyServices.getAAcademicFacultyFromDB(id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -41,10 +43,11 @@ const getAAcademicFaculty = catchAsync(async (req, res) => {
 
 const updateAAcademicFaculty = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await AcademicFacultyServices.updateAAcademicFacultyIntoDB(
-    id,
-    req.body,
-  );
+  const result =
+    await AcademicFacultyServices.updateAAcademicFacultyIntoDB(
+      id,
+      req.body,
+    );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
