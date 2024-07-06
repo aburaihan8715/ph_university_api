@@ -23,7 +23,7 @@ const getAllFaculties = catchAsync(async (req, res) => {
     success: true,
     message: 'Faculties are retrieved successfully',
     meta: result.meta,
-    data: result,
+    data: result.result,
   });
 });
 
