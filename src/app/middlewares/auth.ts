@@ -20,7 +20,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
           'You are not authorized!',
         );
       }
-      const decoded = verifyToken(
+      const decoded = await verifyToken(
         token,
         config.jwt_access_secret as string,
       );
@@ -34,7 +34,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       //     config.jwt_access_secret as string,
       //   ) as JwtPayload;
       // } catch (error) {
-      //   throw new AppError(httpStatus.UNAUTHORIZED, 'Authorization!');
+      //   throw new AppError(httpStatus.UNAUTHORIZED, 'Unauthorize!');
       // }
 
       const { role, userId, iat } = decoded;

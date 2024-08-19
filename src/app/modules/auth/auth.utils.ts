@@ -12,10 +12,14 @@ export const createToken = (
   });
 };
 
-export const verifyToken = (token: string, secret: string) => {
+export const verifyToken = async (token: string, secret: string) => {
   try {
     return jwt.verify(token, secret) as JwtPayload;
   } catch (error) {
     throw new AppError(httpStatus.UNAUTHORIZED, 'Unauthorize');
   }
 };
+
+// export const verifyToken = (token: string, secret: string) => {
+//   return jwt.verify(token, secret) as JwtPayload;
+// };
