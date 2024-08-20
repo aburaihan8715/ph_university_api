@@ -4,9 +4,6 @@ import validateRequest from '../../middlewares/validateRequest';
 import { USER_ROLE } from '../user/user.constant';
 import { OfferedCourseControllers } from './offeredCourse.controller';
 import { OfferedCourseValidations } from './offeredCourse.validation';
-// import { USER_ROLE } from '../User/user.constant';
-// import { OfferedCourseControllers } from './OfferedCourse.controller';
-// import { OfferedCourseValidations } from './OfferedCourse.validation';
 
 const router = express.Router();
 
