@@ -162,13 +162,12 @@ const getMyOfferedCoursesFromDB = async (
   query: Record<string, unknown>,
 ) => {
   //pagination setup
-
   const page = Number(query?.page) || 1;
   const limit = Number(query?.limit) || 10;
   const skip = (page - 1) * limit;
 
-  const student = await Student.findOne({ id: userId });
   // find the student
+  const student = await Student.findOne({ id: userId });
   if (!student) {
     throw new AppError(httpStatus.NOT_FOUND, 'User is not found');
   }
@@ -205,6 +204,7 @@ const getMyOfferedCoursesFromDB = async (
     {
       $unwind: '$course',
     },
+
     {
       $lookup: {
         from: 'enrolledcourses',
@@ -238,6 +238,7 @@ const getMyOfferedCoursesFromDB = async (
         as: 'enrolledCourses',
       },
     },
+
     {
       $lookup: {
         from: 'enrolledcourses',

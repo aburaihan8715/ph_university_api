@@ -36,6 +36,7 @@ const getAllSemesterRegistrations = catchAsync(
     });
   },
 );
+
 const getSingleSemesterRegistration = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;

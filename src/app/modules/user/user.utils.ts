@@ -4,17 +4,10 @@ import { User } from './user.model';
 
 const findLastStudentId = async () => {
   const lastStudent = await User.findOne(
-    {
-      role: 'student',
-    },
-    {
-      id: 1,
-      _id: 0,
-    },
+    { role: 'student' },
+    { id: 1, _id: 0 },
   )
-    .sort({
-      createdAt: -1,
-    })
+    .sort({ createdAt: -1 })
     .lean();
 
   //2030 01 0001
