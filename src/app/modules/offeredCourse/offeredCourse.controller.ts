@@ -71,7 +71,6 @@ const getSingleOfferedCourses = catchAsync(
 const updateOfferedCourse = catchAsync(
   async (req: Request, res: Response) => {
     const { id } = req.params;
-
     const result = await OfferedCourseServices.updateOfferedCourseIntoDB(
       id,
       req.body,

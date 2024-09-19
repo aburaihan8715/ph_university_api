@@ -364,6 +364,7 @@ const updateOfferedCourseIntoDB = async (
    * Step 4: check if the faculty is available at that time. If not then throw error
    * Step 5: update the offered course
    */
+
   const { faculty, days, startTime, endTime } = payload;
 
   const isOfferedCourseExists = await OfferedCourse.findById(id);

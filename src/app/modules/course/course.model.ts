@@ -5,6 +5,7 @@ import {
   TPreRequisiteCourses,
 } from './course.interface';
 
+// 01) COURSE MODEL
 const preRequisiteCoursesSchema = new Schema<TPreRequisiteCourses>(
   {
     course: {
@@ -36,12 +37,10 @@ const courseSchema = new Schema<TCourse>(
     },
     code: {
       type: Number,
-      trim: true,
       required: true,
     },
     credits: {
       type: Number,
-      trim: true,
       required: true,
     },
     preRequisiteCourses: [preRequisiteCoursesSchema],
@@ -55,9 +54,9 @@ const courseSchema = new Schema<TCourse>(
   },
 );
 
-// COURSE MODEL
 export const Course = model<TCourse>('Course', courseSchema);
 
+// 02) FACULTY MODEL
 const courseFacultySchema = new Schema<TCourseFaculty>({
   course: {
     type: Schema.Types.ObjectId,
@@ -72,7 +71,6 @@ const courseFacultySchema = new Schema<TCourseFaculty>({
   ],
 });
 
-// FACULTY MODEL
 export const CourseFaculty = model<TCourseFaculty>(
   'CourseFaculty',
   courseFacultySchema,

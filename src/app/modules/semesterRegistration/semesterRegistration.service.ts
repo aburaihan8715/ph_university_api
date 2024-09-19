@@ -12,16 +12,32 @@ import { SemesterRegistration } from './semesterRegistration.model';
 const createSemesterRegistrationIntoDB = async (
   payload: TSemesterRegistration,
 ) => {
-  /**
-   * Step1: Check if there any registered semester that is already 'UPCOMING'|'ONGOING'
-   * Step2: Check if the semester is exist
-   * Step3: Check if the semester is already registered!
-   * Step4: Create the semester registration
-   */
-
   const academicSemester = payload?.academicSemester;
 
-  //check if there any registered semester that is already 'UPCOMING'|'ONGOING'
+  // Step1: Check if the academicSemester exists
+  const isAcademicSemesterExists =
+    await AcademicSemester.findById(academicSemester);
+
+  if (!isAcademicSemesterExists) {
+    throw new AppError(
+      httpStatus.NOT_FOUND,
+      'This academic semester not found !',
+    );
+  }
+
+  // Step2: Check if the semesterRegistration already exists
+  const isSemesterRegistrationExists = await SemesterRegistration.findOne({
+    academicSemester,
+  });
+
+  if (isSemesterRegistrationExists) {
+    throw new AppError(
+      httpStatus.CONFLICT,
+      'This semester is already registered!',
+    );
+  }
+
+  // Step3: Check if semesterRegistration already 'UPCOMING'|'ONGOING'
   const isThereAnyUpcomingOrOngoingSEmester =
     await SemesterRegistration.findOne({
       $or: [
@@ -36,29 +52,8 @@ const createSemesterRegistrationIntoDB = async (
       `There is already an ${isThereAnyUpcomingOrOngoingSEmester.status} registered semester !`,
     );
   }
-  // check if the semester is exist
-  const isAcademicSemesterExists =
-    await AcademicSemester.findById(academicSemester);
 
-  if (!isAcademicSemesterExists) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'This academic semester not found !',
-    );
-  }
-
-  // check if the semester is already registered!
-  const isSemesterRegistrationExists = await SemesterRegistration.findOne({
-    academicSemester,
-  });
-
-  if (isSemesterRegistrationExists) {
-    throw new AppError(
-      httpStatus.CONFLICT,
-      'This semester is already registered!',
-    );
-  }
-
+  // Step4: Create the semester registration
   const result = await SemesterRegistration.create(payload);
   return result;
 };
@@ -93,20 +88,7 @@ const updateSemesterRegistrationIntoDB = async (
   id: string,
   payload: Partial<TSemesterRegistration>,
 ) => {
-  /**
-   * Step1: Check if the semester is exist
-   * Step2: Check if the requested registered semester is exists
-   * Step3: If the requested semester registration is ended, we will not update anything
-   * Step4: If the requested semester registration is 'UPCOMING', we will let update everything.
-   * Step5: If the requested semester registration is 'ONGOING', we will not update anything  except status to 'ENDED'
-   * Step6: If the requested semester registration is 'ENDED' , we will not update anything
-   *
-   * UPCOMING --> ONGOING --> ENDED
-   *
-   */
-
-  // check if the requested registered semester is exists
-  // check if the semester is already registered!
+  // 01) Check if the semesterRegistration already exists
   const isSemesterRegistrationExists =
     await SemesterRegistration.findById(id);
 
@@ -117,7 +99,7 @@ const updateSemesterRegistrationIntoDB = async (
     );
   }
 
-  //if the requested semester registration is ended , we will not update anything
+  // 02 A) Check if the current status and the requested status are "ENDED"
   const currentSemesterStatus = isSemesterRegistrationExists?.status;
   const requestedStatus = payload?.status;
 
@@ -128,7 +110,7 @@ const updateSemesterRegistrationIntoDB = async (
     );
   }
 
-  // UPCOMING --> ONGOING --> ENDED
+  // 02 B) Check if the current status "UPCOMING" and the requested status "ENDED"
   if (
     currentSemesterStatus === RegistrationStatus.UPCOMING &&
     requestedStatus === RegistrationStatus.ENDED
@@ -139,6 +121,7 @@ const updateSemesterRegistrationIntoDB = async (
     );
   }
 
+  // 02 C) Check if the current status "ONGOING" and the requested status "UPCOMING"
   if (
     currentSemesterStatus === RegistrationStatus.ONGOING &&
     requestedStatus === RegistrationStatus.UPCOMING
@@ -149,6 +132,7 @@ const updateSemesterRegistrationIntoDB = async (
     );
   }
 
+  // 03) Update the semesterRegistration
   const result = await SemesterRegistration.findByIdAndUpdate(
     id,
     payload,
@@ -162,13 +146,7 @@ const updateSemesterRegistrationIntoDB = async (
 };
 
 const deleteSemesterRegistrationFromDB = async (id: string) => {
-  /** 
-  * Step1: Delete associated offered courses.
-  * Step2: Delete semester registration when the status is 
-  'UPCOMING'.
-  **/
-
-  // checking if the semester registration is exist
+  // 01) Check if the semester registration exists
   const isSemesterRegistrationExists =
     await SemesterRegistration.findById(id);
 
@@ -179,7 +157,7 @@ const deleteSemesterRegistrationFromDB = async (id: string) => {
     );
   }
 
-  // checking if the status is still "UPCOMING"
+  // 02) Check if the semester registration status "UPCOMING"
   const semesterRegistrationStatus = isSemesterRegistrationExists.status;
 
   if (semesterRegistrationStatus !== 'UPCOMING') {
@@ -189,20 +167,14 @@ const deleteSemesterRegistrationFromDB = async (id: string) => {
     );
   }
 
+  // 03) Delete the associated offered courses
   const session = await mongoose.startSession();
-
-  //deleting associated offered courses
-
   try {
     session.startTransaction();
 
     const deletedOfferedCourse = await OfferedCourse.deleteMany(
-      {
-        semesterRegistration: id,
-      },
-      {
-        session,
-      },
+      { semesterRegistration: id },
+      { session },
     );
 
     if (!deletedOfferedCourse) {
@@ -212,6 +184,7 @@ const deleteSemesterRegistrationFromDB = async (id: string) => {
       );
     }
 
+    // 04) Finally delete the semester registration
     const deletedSemesterRegistration =
       await SemesterRegistration.findByIdAndDelete(id, {
         session,
@@ -226,13 +199,15 @@ const deleteSemesterRegistrationFromDB = async (id: string) => {
     }
 
     await session.commitTransaction();
-    await session.endSession();
+    // await session.endSession();
 
     return null;
   } catch (err: any) {
     await session.abortTransaction();
-    await session.endSession();
+    // await session.endSession();
     throw new Error(err);
+  } finally {
+    await session.endSession();
   }
 };
 

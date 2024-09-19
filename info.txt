@@ -46,14 +46,37 @@ endTransaction()
 
 2. Free hosting not supported(need to paid hosting)
 
-//FIXME:
-==> my-offered-courses is not working
-
-
-
 
 
 
 // Revision
 ==> module12 done
+
+// NOTE: Revision collection wise 
+done
+=> academicFaculty
+=> academicDepartment
+=> academicSemester
+=> semesterRegistration
+=> course
+=> offeredCourse
+=> enrolledCourse
+
+
+// Credentials
+# super admin
+id: 0001
+pass: test1234
+
+# admin
+id: A-0001
+pass: test1234
+
+# student
+id: 2030010001
+pass: test1234
+
+# faculty
+id: F-0001
+pass: test1234
 
