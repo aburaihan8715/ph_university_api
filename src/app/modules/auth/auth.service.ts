@@ -109,7 +109,10 @@ const changePassword = async (
 
 const refreshToken = async (token: string) => {
   // checking if the given token is valid
-  const decoded = verifyToken(token, config.jwt_refresh_secret as string);
+  const decoded = await verifyToken(
+    token,
+    config.jwt_refresh_secret as string,
+  );
 
   const { userId, iat } = decoded;
 
@@ -215,7 +218,10 @@ const resetPassword = async (
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
   }
 
-  const decoded = verifyToken(token, config.jwt_refresh_secret as string);
+  const decoded = await verifyToken(
+    token,
+    config.jwt_refresh_secret as string,
+  );
 
   //localhost:3000?id=A-0001&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBLTAwMDEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDI4NTA2MTcsImV4cCI6MTcwMjg1MTIxN30.-T90nRaz8-KouKki1DkCSMAbsHyb9yDi0djZU3D6QO4
 
