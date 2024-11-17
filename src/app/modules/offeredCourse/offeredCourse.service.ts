@@ -186,6 +186,7 @@ const getMyOfferedCoursesFromDB = async (
   }
 
   const aggregationQuery = [
+    // stage 1
     {
       $match: {
         semesterRegistration: currentOngoingRegistrationSemester?._id,
@@ -193,6 +194,8 @@ const getMyOfferedCoursesFromDB = async (
         academicDepartment: student.academicDepartment,
       },
     },
+
+    // stage 2
     {
       $lookup: {
         from: 'courses',
@@ -201,10 +204,13 @@ const getMyOfferedCoursesFromDB = async (
         as: 'course',
       },
     },
+
+    // stage 3
     {
       $unwind: '$course',
     },
 
+    // stage 4
     {
       $lookup: {
         from: 'enrolledcourses',
@@ -220,12 +226,15 @@ const getMyOfferedCoursesFromDB = async (
                 $and: [
                   {
                     $eq: [
-                      '$semesterRegistration',
-                      '$$currentOngoingRegistrationSemester',
+                      '$semesterRegistration', //id
+                      '$$currentOngoingRegistrationSemester', //id
                     ],
                   },
                   {
-                    $eq: ['$student', '$$currentStudent'],
+                    $eq: [
+                      '$student', //id
+                      '$$currentStudent', //id
+                    ],
                   },
                   {
                     $eq: ['$isEnrolled', true],
@@ -239,6 +248,7 @@ const getMyOfferedCoursesFromDB = async (
       },
     },
 
+    // stage 5
     {
       $lookup: {
         from: 'enrolledcourses',
@@ -264,6 +274,8 @@ const getMyOfferedCoursesFromDB = async (
         as: 'completedCourses',
       },
     },
+
+    // stage 6
     {
       $addFields: {
         completedCourseIds: {
@@ -275,6 +287,8 @@ const getMyOfferedCoursesFromDB = async (
         },
       },
     },
+
+    // stage 7
     {
       $addFields: {
         isPreRequisitesFulFilled: {
@@ -303,6 +317,8 @@ const getMyOfferedCoursesFromDB = async (
         },
       },
     },
+
+    // stage 8
     {
       $match: {
         isAlreadyEnrolled: false,
